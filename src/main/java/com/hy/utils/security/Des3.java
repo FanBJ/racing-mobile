@@ -14,9 +14,9 @@ import javax.crypto.spec.IvParameterSpec;
  */
 public class Des3 {
 	// 密钥
-	private final static String secretKey = "Security@xingliecom.com#Developer_2015#";
+	private final static String secretKey = "Security@huiyao.com#Developer_2017#";
 	// 向量
-	private final static String iv = "xinglicm";
+	private final static String iv = "huiyao17";
 	// 加解密统一使用的编码方式
 	private final static String encoding = "utf-8";
 
