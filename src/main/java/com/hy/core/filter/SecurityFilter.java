@@ -110,11 +110,11 @@ public class SecurityFilter implements Filter {
 		if (cxt != null&& cxt.getBean("UserInfoServicesImp") != null&& usersService == null)
 			usersService = (IUserInfoServices) cxt.getBean("UserInfoServicesImp");
 		String uids = m.get("uId")[0];
-		UserInfo userById = usersService.getUserById(Integer.valueOf(uids));
-		if (userById == null) {
-			res.sendRedirect("/phone/user/LogonFailure");
-			return false;
-		}
+//		UserInfo userById = usersService.getUserById(Integer.valueOf(uids));
+//		if (userById == null) {
+//			res.sendRedirect("/phone/user/LogonFailure");
+//			return false;
+//		}
 		return true;
     }
 
