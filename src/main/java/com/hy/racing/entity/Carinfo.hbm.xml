@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-3 17:20:02 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="Carinfo" table="carinfo">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="cartypeId" type="java.lang.Integer">
+            <column name="cartype_id" />
+        </property>
+        <property name="cargroupId" type="java.lang.Integer">
+            <column name="cargroup_id" />
+        </property>
+        <property name="userId" type="java.lang.Integer">
+            <column name="user_id" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-3 17:20:02 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="CommonDictInfo" table="common_dict_info">
+        <id name="dictid" type="java.lang.Integer">
+            <column name="dictid" />
+            <generator class="identity" />
+        </id>
+        <property name="tablename" type="string">
+            <column name="tablename" length="50" />
+        </property>
+        <property name="fieldname" type="string">
+            <column name="fieldname" length="100" />
+        </property>
+        <property name="fieldval" type="string">
+            <column name="fieldval" length="8000" />
+        </property>
+        <property name="parentfieldval" type="string">
+            <column name="parentfieldval" length="400" />
+        </property>
+        <property name="fielddesc" type="string">
+            <column name="fielddesc" length="400" />
+        </property>
+        <property name="selected" type="java.lang.Integer">
+            <column name="selected" />
+        </property>
+        <property name="sort" type="java.lang.Integer">
+            <column name="sort" />
+        </property>
+        <property name="state" type="java.lang.Integer">
+            <column name="state" />
+        </property>
+    </class>
+</hibernate-mapping>

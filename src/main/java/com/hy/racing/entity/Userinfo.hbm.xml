@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-3 17:20:02 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="Userinfo" table="userinfo">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="tel" type="string">
+            <column name="tel" length="20" />
+        </property>
+        <property name="username" type="string">
+            <column name="username" length="20" />
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" length="4" />
+        </property>
+        <property name="openid" type="string">
+            <column name="openid" length="128" />
+        </property>
+        <property name="regtime" type="timestamp">
+            <column name="regtime" length="19" />
+        </property>
+        <property name="carteamId" type="java.lang.Integer">
+            <column name="carteam_id" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
+    </class>
+</hibernate-mapping>
