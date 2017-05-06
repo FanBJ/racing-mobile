@@ -12,8 +12,8 @@ public class CarteamServicesImp extends BaseServices implements ICarteamServices
 
 	@Override
 	public Carteam getCarteamByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "from Carteam where code=?";
+		return hqlDao.findObj(hql,code);
 	}
 
 	@Override

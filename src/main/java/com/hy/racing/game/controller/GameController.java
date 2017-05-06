@@ -20,4 +20,6 @@ public class GameController extends ResultBaseController {
 	public boolean addGameLog(Gameinfo game) {
 		return gameServices.addGrade(game);
 	}
+	
+	
 }

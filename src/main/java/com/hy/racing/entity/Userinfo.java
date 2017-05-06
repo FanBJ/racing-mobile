@@ -23,7 +23,7 @@ public class Userinfo implements java.io.Serializable {
 	@JsonIgnore
 	private Integer status;
 	private String openid;
-	private Date regtime;
+	private String regtime;
 	//微信用户信息
 	private String nickname;
 	private String city;
@@ -181,11 +181,11 @@ public class Userinfo implements java.io.Serializable {
 		this.openid = openid;
 	}
 
-	public Date getRegtime() {
+	public String getRegtime() {
 		return this.regtime;
 	}
 
-	public void setRegtime(Date regtime) {
+	public void setRegtime(String regtime) {
 		this.regtime = regtime;
 	}
 

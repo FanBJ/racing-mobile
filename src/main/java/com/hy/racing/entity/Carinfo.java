@@ -21,24 +21,23 @@ public class Carinfo implements java.io.Serializable {
 	private Integer cargroupId;// 组别ID
 	private String code;// 车牌
 	private String displacement;// 排量
-	private Integer ischange;//是否改装
+	private Integer ischange;// 是否改装
 	@JsonProperty("uid")
-	private Integer userId;
+	private Integer uid;
 	private Integer status;
-	private Date regtime;//添加时间
+	private String regtime;// 添加时间
 
 	/*
 	 * 不存数据库
 	 */
-	
+
 	private String teamCode;// 车队编号
 	private String newGrade;// 最新成绩
 	private String bestGrade;// 最好成绩
-	private String username;//所属人名称
-	private String tel;//所属人电话
-	private String groupname;//所属组名称
-	private String teamname;//所属车队名称
-	
+	private String username;// 所属人名称
+	private String tel;// 所属人电话
+	private String groupname;// 所属组名称
+	private String teamname;// 所属车队名称
 
 	public Integer getIschange() {
 		return ischange;
@@ -48,11 +47,11 @@ public class Carinfo implements java.io.Serializable {
 		this.ischange = ischange;
 	}
 
-	public Date getRegtime() {
+	public String getRegtime() {
 		return regtime;
 	}
 
-	public void setRegtime(Date regtime) {
+	public void setRegtime(String regtime) {
 		this.regtime = regtime;
 	}
 
@@ -93,7 +92,7 @@ public class Carinfo implements java.io.Serializable {
 	}
 
 	public void setDisplacement(String displacement) {
-		this.displacement = displacement;
+		this.displacement = displacement != null ? displacement.toUpperCase() : displacement;
 	}
 
 	public String getNewGrade() {
@@ -149,7 +148,7 @@ public class Carinfo implements java.io.Serializable {
 	}
 
 	public void setCode(String code) {
-		this.code = code;
+		this.code = code != null ? code.toUpperCase() : code;
 	}
 
 	public Integer getId() {
@@ -168,12 +167,12 @@ public class Carinfo implements java.io.Serializable {
 		this.cargroupId = cargroupId;
 	}
 
-	public Integer getUserId() {
-		return this.userId;
+	public Integer getUid() {
+		return uid;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setUid(Integer uid) {
+		this.uid = uid;
 	}
 
 	public Integer getStatus() {

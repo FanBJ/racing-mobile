@@ -17,13 +17,17 @@
 		<property name="brand" type="string">
 			<column name="brand" length="20" />
 		</property>
+		
 		<property name="cartype" type="string">
 			<column name="cartype" length="20" />
+		</property>
+		<property name="displacement" type="string">
+			<column name="displacement" length="20" />
 		</property>
 		<property name="teamId" type="java.lang.Integer">
 			<column name="team_id" />
 		</property>
-		<property name="userId" type="java.lang.Integer">
+		<property name="uid" type="java.lang.Integer">
 			<column name="user_id" />
 		</property>
 		<property name="status" type="java.lang.Integer">
@@ -32,8 +36,8 @@
 		<property name="ischange" type="java.lang.Integer">
 			<column name="ischange" />
 		</property>
-		<property name="regtime" type="timestamp">
-			<column name="regtime" length="19" />
+		<property name="regtime" type="string">
+			<column name="regtime" length="20" />
 		</property>
 	</class>
 </hibernate-mapping>

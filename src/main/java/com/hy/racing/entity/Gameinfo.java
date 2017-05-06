@@ -13,18 +13,10 @@ public class Gameinfo implements java.io.Serializable {
 	private Integer roundId;
 	private Integer carId;
 	private String speed;
-	private Date logtime;
+	private String logtime;
 	private Integer status;
 
 	public Gameinfo() {
-	}
-
-	public Gameinfo(Integer roundId, Integer carId, String speed, Date logtime, Integer status) {
-		this.roundId = roundId;
-		this.carId = carId;
-		this.speed = speed;
-		this.logtime = logtime;
-		this.status = status;
 	}
 
 	public Integer getId() {
@@ -59,11 +51,11 @@ public class Gameinfo implements java.io.Serializable {
 		this.speed = speed;
 	}
 
-	public Date getLogtime() {
+	public String getLogtime() {
 		return this.logtime;
 	}
 
-	public void setLogtime(Date logtime) {
+	public void setLogtime(String logtime) {
 		this.logtime = logtime;
 	}
 

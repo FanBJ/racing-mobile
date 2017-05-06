@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hy.core.base.ResultBaseController;
 import com.hy.racing.entity.Userinfo;
 import com.hy.racing.userinfo.services.IUserInfoServices;
+import com.hy.utils.CarUtils;
+import com.hy.utils.http.HttpUtil;
 import com.hy.utils.json.JsonUtil;
 import com.hy.utils.pay.wx.CommonUtil;
 import com.hy.utils.pay.wx.Token;
@@ -35,7 +37,7 @@ public class LoginController extends ResultBaseController {
 		if (null == token || token.getOpenid() == null) {
 			return "error";
 		}
-		System.out.println("token===" + JsonUtil.toJson(token));
+		//System.out.println("token===" + JsonUtil.toJson(token));
 
 		Userinfo user = userinfoServices.getUserByOpenid(token.getOpenid());
 		if (user == null) {
@@ -48,10 +50,10 @@ public class LoginController extends ResultBaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "index";
-	}
-
-	public static void main(String[] args) {
-		System.out.println(URLEncoder.encode("http://c.eeout.com/phone/login/auth"));
+		return "redirect:http://x3.logacg.com?uid=0&openid="+user.getOpenid()+"&username="
+		+HttpUtil.encode(user.getUsername())+"&sex="+user.getSex()+"&area="+user.getArea()
+		+"&nickname="+HttpUtil.encode(user.getNickname())+"&city="+HttpUtil.encode(user.getCity())
+		+"&province="+HttpUtil.encode(user.getProvince())+"&country="+HttpUtil.encode(user.getCountry())
+		+"&headimgurl="+HttpUtil.encode(user.getHeadimgurl())+"&ranking="+user.getRanking()+"&bestTime="+CarUtils.getShowTime(user.getBestTime());
 	}
 }

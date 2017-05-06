@@ -23,8 +23,8 @@
         <property name="openid" type="string">
             <column name="openid" length="128" />
         </property>
-        <property name="regtime" type="timestamp">
-            <column name="regtime" length="19" />
+        <property name="regtime" type="string">
+            <column name="regtime" length="20" />
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />

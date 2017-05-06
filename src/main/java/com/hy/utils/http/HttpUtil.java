@@ -24,6 +24,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * HTTP请求工具类
@@ -235,6 +236,17 @@ public class HttpUtil {
 			method.releaseConnection();
 		}
 		return response;
+	}
+	
+	public static String encode(String content){
+		if(StringUtils.isBlank(content)){
+			return "";
+		}
+		try {
+			return URLEncoder.encode(content,"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			return content;
+		}
 	}
 
 }

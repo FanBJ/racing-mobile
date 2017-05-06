@@ -9,6 +9,7 @@ import com.hy.core.base.ResultInfo;
 import com.hy.core.services.BaseServices;
 import com.hy.racing.entity.Userinfo;
 import com.hy.racing.userinfo.services.IUserInfoServices;
+import com.hy.utils.date.DateUtil;
 
 @Service
 public class UserinfoServicesImp extends BaseServices implements IUserInfoServices {
@@ -32,7 +33,7 @@ public class UserinfoServicesImp extends BaseServices implements IUserInfoServic
 			return ResultInfo.REG_TEL_EXIST;
 		}
 		user.setStatus(1);
-		user.setRegtime(new Date());
+		user.setRegtime(DateUtil.nowDate());
 		boolean bool = addObj(user);
 		return bool ? ResultInfo.REG_OK : ResultInfo.COMMON_ADD_FAIL;
 	}
