@@ -24,22 +24,7 @@ public class UserinfoController extends ResultBaseController {
 	@RequestMapping("/getUserinfoById")
 	@ResponseBody
 	public Object getUserinfo(@RequestParam("uid") Integer userId, HttpServletRequest request) {
-		Userinfo user = new Userinfo();
-		user.setId(userId);
-		user.setBestTime("01'12\"11");
-		user.setCity("贵阳");
-		user.setCountry("中国");
-		user.setHeadimgurl("http://picture.eeout.com/goods/comb/1469180899520.png");
-		user.setNickname("我是昵称");
-		user.setOpenid("123asdlkhf23o9dfgu");
-		user.setProvince("贵州");
-		user.setRanking(10);
-		user.setUserID("522411456897721132145");
-		user.setSex("1");
-		user.setSubscribe(1);
-		user.setTel("18984377070");
-		user.setUsername("张三");
-		return setResultMap(user, false);
+		return setResultMap(userServices.getUserById(userId), false);
 	}
 
 	@RequestMapping("/regUser")

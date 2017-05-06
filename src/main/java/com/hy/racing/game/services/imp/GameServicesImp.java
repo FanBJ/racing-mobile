@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.hy.core.services.BaseServices;
 import com.hy.racing.entity.Gameinfo;
+import com.hy.racing.game.bean.GameRankBean;
 import com.hy.racing.game.services.IGameServices;
 import com.hy.utils.date.DateUtil;
+import com.hy.utils.db.DBUtil;
 @Service
 public class GameServicesImp extends BaseServices implements IGameServices {
 
@@ -40,6 +42,12 @@ public class GameServicesImp extends BaseServices implements IGameServices {
 	public List<Gameinfo> getTotalRank() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<GameRankBean> findCarRank() {
+		String sql = "select c.id 'uid',c.username,b.id 'cid',b.brand,b.displacement,MIN(speed) 'speed' from gameinfo a join carinfo b on a.car_id = b.id join userinfo c on b.user_id = c.id group by b.id";
+		return DBUtil.converListMapToListObj(sqlDao.findToMap(sql), GameRankBean.class);
 	}
 
 }

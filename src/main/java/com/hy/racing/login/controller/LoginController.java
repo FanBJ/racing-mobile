@@ -43,6 +43,8 @@ public class LoginController extends ResultBaseController {
 		if (user == null) {
 			user = new Userinfo();
 			user.setId(0);
+		}else{
+			userinfoServices.getUserGrade(user);
 		}
 		try {
 			WxUserinfo wx = CommonUtil.getWxUserinfo(token.getAccess_token(), token.getOpenid());

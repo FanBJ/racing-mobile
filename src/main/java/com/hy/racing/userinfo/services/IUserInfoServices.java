@@ -10,4 +10,6 @@ public interface IUserInfoServices {
 	int addUserinfo(Userinfo user);
 	
 	List<Userinfo> findUser(Userinfo user);
+	
+	void getUserGrade(Userinfo user);
 }

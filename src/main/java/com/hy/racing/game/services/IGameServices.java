@@ -3,6 +3,7 @@ package com.hy.racing.game.services;
 import java.util.List;
 
 import com.hy.racing.entity.Gameinfo;
+import com.hy.racing.game.bean.GameRankBean;
 
 public interface IGameServices {
 	List<Gameinfo> getAllLogByCarId(Integer carId);
@@ -19,4 +20,6 @@ public interface IGameServices {
 	 * @return
 	 */
 	List<Gameinfo> getTotalRank();
+	
+	List<GameRankBean> findCarRank();
 }
