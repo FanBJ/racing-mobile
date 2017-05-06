@@ -325,5 +325,23 @@ public class CacheUtils {
 		}
 		return null;
 	}
+	
+	private static final String cache_name = "globalCache";
+	
+	public static Map<String, Object> getAllCache() {
+		Map<String, Object> cache = (Map<String, Object>) getServletContext().getAttribute(cache_name);
+		return cache == null ? new HashMap<String, Object>(0) : cache;
+	}
+	
+	public static Object get(String key) {
+		return getAllCache().get(key);
+	}
+	
+	public static void put(String key, Object value) {
+		Map<String, Object> cache = getAllCache();
+		cache.put(key, value);
+
+		getServletContext().setAttribute(cache_name, cache);
+	}
 
 }

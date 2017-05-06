@@ -1,31 +1,19 @@
 package com.hy.utils.pay.wx;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import java.util.SortedMap;
-import java.util.TreeMap;
 
-import com.hy.utils.db.DBUtil;
-import com.hy.utils.json.JacksonUtils;
+import com.hy.utils.security.Coder;
 
 public class PayCommonUtil {
 	public static String CreateNoncestr(int length) {
 		String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		String res = "";
 		for (int i = 0; i < length; i++) {
-			Random rd = new Random();
-			res += chars.charAt(rd.nextInt(chars.length() - 1));
-		}
-		return res;
-	}
-
-	public static String CreateNoncestr() {
-		String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		String res = "";
-		for (int i = 0; i < 32; i++) {
 			Random rd = new Random();
 			res += chars.charAt(rd.nextInt(chars.length() - 1));
 		}
@@ -40,7 +28,7 @@ public class PayCommonUtil {
 	 *            请求参数
 	 * @return
 	 */
-	public static String createSign(String characterEncoding, SortedMap<String, Object> parameters,String apiKey) {
+	public static String createSign(String characterEncoding, SortedMap<String, Object> parameters) {
 		StringBuffer sb = new StringBuffer();
 		Set<Entry<String, Object>> es = parameters.entrySet();
 		Iterator<Entry<String, Object>> it = es.iterator();
@@ -52,9 +40,30 @@ public class PayCommonUtil {
 				sb.append(k + "=" + v + "&");
 			}
 		}
-		sb.append("key=" + apiKey);
-		System.out.println("参数拼接：" + sb.toString());
+		sb.append("key=" + ConfigUtil.API_KEY);
 		String sign = MD5Util.MD5Encode(sb.toString(), characterEncoding).toUpperCase();
+		return sign;
+	}
+
+	/**
+	 * @Description：JS-SDK使用权限签名算法
+	 * @param parameters
+	 *            请求参数
+	 * @return
+	 */
+	public static String createSignatureSHA1(SortedMap<String, Object> parameters) {
+		StringBuffer sb = new StringBuffer();
+		Set<Entry<String, Object>> es = parameters.entrySet();
+		Iterator<Entry<String, Object>> it = es.iterator();
+		while (it.hasNext()) {
+			Entry<String, Object> entry = it.next();
+			String k = entry.getKey();
+			Object v = entry.getValue();
+			if (null != v && !"".equals(v) && !"sign".equals(k) && !"key".equals(k)) {
+				sb.append(k + "=" + v + "&");
+			}
+		}
+		String sign = Coder.encode("SHA1", sb.toString().substring(0, sb.toString().length() - 1));
 		return sign;
 	}
 
@@ -63,44 +72,25 @@ public class PayCommonUtil {
 	 * @param parameters
 	 *            请求参数
 	 * @return
+	 * @throws UnsupportedEncodingException
 	 */
-	public static String getRequestXml(SortedMap<String, Object> param) {
-		StringBuffer sf = new StringBuffer();
-		sf.append("<xml>");
-		for (Entry<String, Object> ele : param.entrySet()) {
-			sf.append("<" + ele.getKey() + ">");
-			sf.append("<![CDATA[" + ele.getValue() + "]]>");
-			sf.append("</" + ele.getKey() + ">");
+	public static String getRequestXml(SortedMap<String, Object> param) throws UnsupportedEncodingException {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<xml>");
+		Set<Entry<String, Object>> es = param.entrySet();
+		Iterator<Entry<String, Object>> it = es.iterator();
+		while (it.hasNext()) {
+			Entry<String, Object> entry = it.next();
+			String k = (String) entry.getKey();
+			String v = (String) entry.getValue();
+			if ("attach".equalsIgnoreCase(k) || "body".equalsIgnoreCase(k) || "sign".equalsIgnoreCase(k)) {
+				sb.append("<" + k + ">" + "<![CDATA[" + v + "]]></" + k + ">");
+			} else {
+				sb.append("<" + k + ">" + v + "</" + k + ">");
+			}
 		}
-		sf.append("</xml>");
-		return sf.toString();
-	}
-
-	/**
-	 * 获取微信订单信息
-	 * 
-	 * @param orderNo
-	 * @return
-	 */
-	public static WxOrderQueryBean queryWxOrderInfo(String orderNo, String mchId) {
-		PayInfo pi = ConfigUtil.getPayInfo(mchId);
-		if (null == pi)
-			return null;
-
-		SortedMap<String, Object> params = new TreeMap<String, Object>();
-		params.put("appid", pi.getAppid());
-		params.put("mch_id", mchId);
-		params.put("nonce_str", CreateNoncestr(16));
-		params.put("out_trade_no", orderNo);
-		String sign = createSign("UTF-8", params,pi.getApiKey());
-		String xml = "<xml>" + "<appid>" + pi.getAppid() + "</appid>" + "<mch_id>" + mchId + "</mch_id>" + "<nonce_str>" + params.get("nonce_str") + "</nonce_str>" + "<out_trade_no>" + orderNo + "</out_trade_no>" + "<sign>" + sign + "</sign>" + "</xml>";
-		try {
-			WxOrderQueryBean wb = DBUtil.convertMapToObject(XMLUtil.doXMLParse(CommonUtil.httpsRequest(ConfigUtil.CHECK_ORDER_URL, "POST", xml)), WxOrderQueryBean.class);
-			return wb;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		sb.append("</xml>");
+		return sb.toString();
 	}
 
 	/**

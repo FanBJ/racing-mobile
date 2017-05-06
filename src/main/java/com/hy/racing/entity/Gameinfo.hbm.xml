@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 2017-5-3 17:20:02 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
-    <class name="Gameinfo" table="gameinfo">
+    <class name="com.hy.racing.entity.Gameinfo" table="gameinfo">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />

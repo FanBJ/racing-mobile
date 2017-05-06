@@ -7,17 +7,21 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.URL;
+import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import com.hy.utils.cache.CacheUtils;
 import com.hy.utils.json.JacksonUtils;
 
 /**
  * 通用工具类
  * 
+ * @author 李欣桦
+ * @date 2014-11-21下午9:10:30
  */
 public class CommonUtil {
 	/**
@@ -84,16 +88,71 @@ public class CommonUtil {
 	 * 
 	 * @return
 	 */
-	public static Token getToken(String code, String mchId) {
-		PayInfo pi = ConfigUtil.getPayInfo(mchId);
-		if (null == pi)
-			return null;
-		
+	public static Token getToken(String code) {
 		Token token = null;
-		String url = ConfigUtil.GET_TOKEN_BY_CODE.replace("APPID", pi.getAppid()).replace("SECRET", pi.getAppSecrect()).replace("CODE", code);
+		String url = ConfigUtil.GET_TOKEN_BY_CODE.replace("APPID", ConfigUtil.APPID).replace("SECRET", ConfigUtil.APP_SECRECT).replace("CODE", code);
 		// 发起GET请求获取凭证
 		try {
 			token = JacksonUtils.fromJson(httpsRequest(url, "GET", null), Token.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return token;
+	}
+
+	/**
+	 * access_token是公众号的全局唯一票据
+	 * 
+	 * @return
+	 */
+	public static Token getAccessToken() {
+		Token token = (Token) CacheUtils.get("access_token");
+		if (token != null && token.getAccess_token() != null) {// 缓存中已存在，从里面取
+			long l = System.currentTimeMillis() - token.getCreateTime().getTime();
+			if ((l / 1000) <= 7000) {
+				return token;
+			}
+		}
+
+		String url = ConfigUtil.TOKEN_URL.replace("APPID", ConfigUtil.APPID).replace("APPSECRET", ConfigUtil.APP_SECRECT);
+		// 发起GET请求获取凭证
+		try {
+			token = JacksonUtils.fromJson(httpsRequest(url, "GET", null), Token.class);
+			token.setCreateTime(new Date());
+			// 存入缓存
+			CacheUtils.put("access_token", token);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return token;
+	}
+
+	/**
+	 * jsapi_ticket是公众号用于调用微信JS接口的临时票据。正常情况下，jsapi_ticket的有效期为7200秒，
+	 * 通过access_token来获取
+	 * 
+	 * @return
+	 */
+	public static Token getTicket() {
+		Token access = getAccessToken();
+		if (null == access || access.getAccess_token() == null) {
+			return null;
+		}
+		Token token = (Token) CacheUtils.get("jsapi_ticket");
+		if (token != null && token.getTicket() != null) {// 缓存中已存在，从里面取
+			long l = System.currentTimeMillis() - token.getCreateTime().getTime();
+			if ((l / 1000) <= 7000) {
+				return token;
+			}
+		}
+
+		String url = ConfigUtil.TICKET_URL.replace("ACCESS_TOKEN", access.getAccess_token());
+		// 发起GET请求获取凭证
+		try {
+			token = JacksonUtils.fromJson(httpsRequest(url, "POST", null), Token.class);
+			token.setCreateTime(new Date());
+			// 存入缓存
+			CacheUtils.put("jsapi_ticket", token);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -105,6 +164,15 @@ public class CommonUtil {
 		return JacksonUtils.fromJson(httpsRequest(url, "GET", null), WxUserinfo.class);
 	}
 
+	
+	public static String getTimestamp() {
+		return ((long) System.currentTimeMillis() / 1000) + "";
+	}
+
+	public static String getNonceStr() {
+		return PayCommonUtil.CreateNoncestr(16);
+	}
+	
 	public static String urlEncodeUTF8(String source) {
 		String result = source;
 		try {

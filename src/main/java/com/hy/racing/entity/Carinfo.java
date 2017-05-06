@@ -1,5 +1,12 @@
 package com.hy.racing.entity;
+
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hy.utils.CarUtils;
+
 // default package
+
 // Generated 2017-5-3 17:20:02 by Hibernate Tools 4.3.5.Final
 
 /**
@@ -8,19 +15,141 @@ package com.hy.racing.entity;
 public class Carinfo implements java.io.Serializable {
 
 	private Integer id;
-	private Integer cartypeId;
-	private Integer cargroupId;
+	private String brand;// 品牌
+	private String cartype;// 车型
+	private Integer teamId;// 车队ID
+	private Integer cargroupId;// 组别ID
+	private String code;// 车牌
+	private String displacement;// 排量
+	private Integer ischange;//是否改装
+	@JsonProperty("uid")
 	private Integer userId;
 	private Integer status;
+	private Date regtime;//添加时间
 
-	public Carinfo() {
+	/*
+	 * 不存数据库
+	 */
+	
+	private String teamCode;// 车队编号
+	private String newGrade;// 最新成绩
+	private String bestGrade;// 最好成绩
+	private String username;//所属人名称
+	private String tel;//所属人电话
+	private String groupname;//所属组名称
+	private String teamname;//所属车队名称
+	
+
+	public Integer getIschange() {
+		return ischange;
 	}
 
-	public Carinfo(Integer cartypeId, Integer cargroupId, Integer userId, Integer status) {
-		this.cartypeId = cartypeId;
-		this.cargroupId = cargroupId;
-		this.userId = userId;
-		this.status = status;
+	public void setIschange(Integer ischange) {
+		this.ischange = ischange;
+	}
+
+	public Date getRegtime() {
+		return regtime;
+	}
+
+	public void setRegtime(Date regtime) {
+		this.regtime = regtime;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public String getGroupname() {
+		return groupname;
+	}
+
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
+	}
+
+	public String getTeamname() {
+		return teamname;
+	}
+
+	public void setTeamname(String teamname) {
+		this.teamname = teamname;
+	}
+
+	public String getDisplacement() {
+		return displacement;
+	}
+
+	public void setDisplacement(String displacement) {
+		this.displacement = displacement;
+	}
+
+	public String getNewGrade() {
+		return CarUtils.getShowTime(newGrade);
+	}
+
+	public void setNewGrade(String newGrade) {
+		this.newGrade = newGrade;
+	}
+
+	public String getBestGrade() {
+		return CarUtils.getShowTime(bestGrade);
+	}
+
+	public void setBestGrade(String bestGrade) {
+		this.bestGrade = bestGrade;
+	}
+
+	public Integer getTeamId() {
+		return teamId;
+	}
+
+	public void setTeamId(Integer teamId) {
+		this.teamId = teamId;
+	}
+
+	public String getTeamCode() {
+		return teamCode;
+	}
+
+	public void setTeamCode(String teamCode) {
+		this.teamCode = teamCode;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public String getCartype() {
+		return cartype;
+	}
+
+	public void setCartype(String cartype) {
+		this.cartype = cartype;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public Integer getId() {
@@ -29,14 +158,6 @@ public class Carinfo implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getCartypeId() {
-		return this.cartypeId;
-	}
-
-	public void setCartypeId(Integer cartypeId) {
-		this.cartypeId = cartypeId;
 	}
 
 	public Integer getCargroupId() {

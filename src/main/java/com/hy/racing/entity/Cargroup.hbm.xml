@@ -3,13 +3,16 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 2017-5-3 17:20:02 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
-    <class name="Cargroup" table="cargroup">
+    <class name="com.hy.racing.entity.Cargroup" table="cargroup">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
         </id>
         <property name="name" type="string">
             <column name="name" length="100" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="100" />
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />

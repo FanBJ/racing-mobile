@@ -49,6 +49,11 @@ public class SecurityFilter implements Filter {
 			FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
+		res.setHeader("Access-Control-Allow-Origin", "*");
+		res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		res.setHeader("Access-Control-Max-Age", "3600");
+		res.setHeader("Access-Control-Allow-Headers", "x-requested-with,Authorization");
+		res.setHeader("Access-Control-Allow-Credentials", "true");
 		/*
 		 * 
 		 * 来源判断，防止恶意访问

@@ -72,6 +72,9 @@ public class ResultBaseController extends BaseController {
 	protected Map<String,Object> setResultMap(Object data, boolean isEncrypt) {
 		return setResultMap(ResultInfo.SUCCESS, ResultInfo.getZhMsg(ResultInfo.SUCCESS), data, isEncrypt);
 	}
+	protected Map<String,Object> setResultMap(Object data,int infoState, boolean isEncrypt) {
+		return setResultMap(infoState, ResultInfo.getZhMsg(infoState), data, isEncrypt);
+	}
 
 	protected Map<String,Object> setResultMap(Object data) {
 		return setResultMap(ResultInfo.SUCCESS,ResultInfo.getZhMsg(ResultInfo.SUCCESS), data, ISENCRYPT);

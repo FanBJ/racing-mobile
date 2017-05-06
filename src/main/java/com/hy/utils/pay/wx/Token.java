@@ -1,5 +1,7 @@
 package com.hy.utils.pay.wx;
 
+import java.util.Date;
+
 public class Token {
 	private String openid;
 	private String access_token;
@@ -7,9 +9,29 @@ public class Token {
 	private String refresh_token;
 	private String scope;
 	private String unionid;
+	private String ticket;//jsapi_ticket是公众号用于调用微信JS接口的临时票据。正常情况下，jsapi_ticket的有效期为7200秒，通过access_token来获取
 	
 	private String errcode;
 	private String errmsg;
+	
+	private Date createTime;//Token生成时间
+	
+
+	public String getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
 	public String getErrmsg() {
 		return errmsg;

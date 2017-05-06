@@ -9,6 +9,7 @@ public class Carteam implements java.io.Serializable {
 
 	private Integer id;
 	private String name;
+	private String code;//车队邀请编码
 	private Integer status;
 
 	public Carteam() {
@@ -17,6 +18,14 @@ public class Carteam implements java.io.Serializable {
 	public Carteam(String name, Integer status) {
 		this.name = name;
 		this.status = status;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public Integer getId() {

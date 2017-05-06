@@ -10,6 +10,7 @@ public class Cargroup implements java.io.Serializable {
 
 	private Integer id;
 	private String name;
+	private String description;//描述
 	private Integer status;
 
 	public Cargroup() {
@@ -18,6 +19,14 @@ public class Cargroup implements java.io.Serializable {
 	public Cargroup(String name, Integer status) {
 		this.name = name;
 		this.status = status;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Integer getId() {

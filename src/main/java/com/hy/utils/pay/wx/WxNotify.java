@@ -25,19 +25,9 @@ public class WxNotify {
 
 	private String err_code;//
 	private String err_code_des;//
-	
-	private String shareid;//分享者openid
 
 	public boolean isPayOk() {
 		return "SUCCESS".equals(return_code) && "SUCCESS".equals(result_code);
-	}
-
-	public String getShareid() {
-		return shareid;
-	}
-
-	public void setShareid(String shareid) {
-		this.shareid = shareid;
 	}
 
 	public String getErr_code() {
