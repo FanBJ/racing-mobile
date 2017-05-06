@@ -16,4 +16,8 @@ public class CarUtils {
 
 		}
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(getShowTime(null));
+	}
 }

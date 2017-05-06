@@ -21,5 +21,11 @@ public class GameController extends ResultBaseController {
 		return gameServices.addGrade(game);
 	}
 	
+	@RequestMapping("/getGameTotalRank")
+	@ResponseBody
+	public Object getGameTotalRank() {
+		return setResultMap(gameServices.findCarRank(),false);
+	}
+	
 	
 }

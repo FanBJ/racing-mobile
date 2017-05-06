@@ -40,13 +40,12 @@ public class GameServicesImp extends BaseServices implements IGameServices {
 
 	@Override
 	public List<Gameinfo> getTotalRank() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<GameRankBean> findCarRank() {
-		String sql = "select c.id 'uid',c.username,b.id 'cid',b.brand,b.displacement,MIN(speed) 'speed' from gameinfo a join carinfo b on a.car_id = b.id join userinfo c on b.user_id = c.id group by b.id";
+		String sql = "select c.id 'uid',c.username,b.id 'cid',b.brand,b.cartype,b.displacement,MIN(speed) 'speed' from gameinfo a join carinfo b on a.car_id = b.id join userinfo c on b.user_id = c.id group by b.id order by speed";
 		return DBUtil.converListMapToListObj(sqlDao.findToMap(sql), GameRankBean.class);
 	}
 

@@ -52,7 +52,7 @@ public class LoginController extends ResultBaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:http://x3.logacg.com?uid=0&openid="+user.getOpenid()+"&username="
+		return "redirect:http://x3.logacg.com?uid="+user.getId()+"&openid="+user.getOpenid()+"&username="
 		+HttpUtil.encode(user.getUsername())+"&sex="+user.getSex()+"&area="+user.getArea()
 		+"&nickname="+HttpUtil.encode(user.getNickname())+"&city="+HttpUtil.encode(user.getCity())
 		+"&province="+HttpUtil.encode(user.getProvince())+"&country="+HttpUtil.encode(user.getCountry())

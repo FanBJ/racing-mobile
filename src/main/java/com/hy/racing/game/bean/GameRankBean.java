@@ -5,9 +5,16 @@ public class GameRankBean {
 	private String username;//姓名
 	private Integer cid;//车ID
 	private String brand;//品牌
+	private String cartype;//车型
 	private String displacement;//排量
 	private String speed;//最佳速度
 	
+	public String getCartype() {
+		return cartype;
+	}
+	public void setCartype(String cartype) {
+		this.cartype = cartype;
+	}
 	public String getUsername() {
 		return username;
 	}

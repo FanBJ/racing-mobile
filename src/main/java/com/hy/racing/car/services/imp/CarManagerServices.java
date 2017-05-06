@@ -14,6 +14,7 @@ import com.hy.racing.car.services.ICarManager;
 import com.hy.racing.carteam.services.ICarteamServices;
 import com.hy.racing.entity.Carinfo;
 import com.hy.racing.entity.Carteam;
+import com.hy.utils.CarUtils;
 import com.hy.utils.cache.CacheUtils;
 import com.hy.utils.date.DateUtil;
 import com.hy.utils.db.DBUtil;
@@ -36,9 +37,9 @@ public class CarManagerServices extends BaseServices implements ICarManager {
 			return ResultInfo.ADD_CAR_CODE_EXIST;
 		}
 
-		if (null != car.getTeamCode()) {
+		if (!StringUtils.isBlank(car.getTeamCode())) {
 			Carteam team = carteamServices.getCarteamByCode(car.getTeamCode().toLowerCase());
-			if (team==null) {
+			if (team == null) {
 				// 车队编号没有找到
 				return ResultInfo.ADD_CAR_TEAMCODE_NOT_EXIST;
 			}
@@ -68,14 +69,31 @@ public class CarManagerServices extends BaseServices implements ICarManager {
 
 	@Override
 	public List<Carinfo> getAll(Integer uid) {
-		List<Carinfo> carList = hqlDao.find("from Carinfo where uid=" + uid);
+		List<Carinfo> carList = DBUtil.converListMapToListObj(sqlDao.findToMap(
+				"select a.id,a.cargroup_id 'cargroupId',a.user_id 'uid',a.code,a.brand,a.cartype,a.displacement,a.ischange,b.name 'groupname' from carinfo a join cargroup b on a.cargroup_id = b.id where a.user_id="
+						+ uid),
+				Carinfo.class);
 		if (null != carList) {
-			String sql = "select MAX(logtime) 'newGrade',MIN(speed) 'bestGrade' from gameinfo where car_id=?";
-
+			String sql1 = "select MIN(speed) 'bestGrade' from gameinfo where car_id=?";
+			String sql2 = "select speed 'newGrade' from gameinfo where car_id=? order by logtime desc limit 1";
 			for (Carinfo car : carList) {
-				Map<String, Object> map = sqlDao.findObjToMap(sql, car.getId());
-				car.setNewGrade((String) map.get("newGrade"));
-				car.setBestGrade((String) map.get("bestGrade"));
+				Map<String, Object> map = sqlDao.findObjToMap(sql1, car.getId());
+				if (null == map) {
+					car.setBestGrade(CarUtils.getShowTime(null));
+				} else if (map.get("bestGrade") == null) {
+					car.setBestGrade(CarUtils.getShowTime(null));
+				} else {
+					car.setBestGrade(CarUtils.getShowTime((String) map.get("bestGrade")));
+				}
+
+				map = sqlDao.findObjToMap(sql2, car.getId());
+				if (null == map) {
+					car.setNewGrade(CarUtils.getShowTime(null));
+				} else if (map.get("newGrade") == null) {
+					car.setNewGrade(CarUtils.getShowTime(null));
+				} else {
+					car.setNewGrade(CarUtils.getShowTime((String) map.get("newGrade")));
+				}
 			}
 		}
 		return carList;
