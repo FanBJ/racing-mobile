@@ -21,8 +21,8 @@
 				tel : $("#tel").val()
 			}, function(data) {
 				$(data).each(function(i, e) {
-					$("#showData").append("<tr><td>"+e.id+"</td><td>"+e.username+"</td><td>"+e.sex
-							+"</td><td>"+e.tel+"</td><td>"+e.UserID+"</td><td>"+e.area+"</td><td><input type='button' value='编辑'/></td></tr>");
+					$("#showData").append("<tr><td>"+e.uid+"</td><td>"+e.username+"</td><td>"+e.sex
+							+"</td><td>"+e.tel+"</td><td>"+e.userID+"</td><td>"+e.area+"</td><td><input type='button' value='编辑'/></td></tr>");
 				});
 			});
 		});
@@ -31,7 +31,7 @@
 </head>
 <body>
 	<a href="findcar.jsp"> 查看/录入成绩 </a>
-	<table align="center">
+	<table align="center" border="1">
 		<tr>
 			<td colspan="7">姓名：<input name="username" id="username" />&nbsp;&nbsp;手机号：<input
 				name="tel" id="tel" />&nbsp;&nbsp;<input value="搜索" type="button"
