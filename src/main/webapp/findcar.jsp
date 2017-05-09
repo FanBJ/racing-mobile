@@ -19,7 +19,7 @@
 				tel : $("#tel").val()
 			}, function(data) {
 				$(data.data).each(function(i, e) {
-					$("#showData").append("<tr><td>"+e.id+"</td><td>"+e.username+"</td><td>"+e.groupname
+					$("#showData").append("<tr><td>"+e.id+"</td><td>"+e.username+"</td><td>"+e.tel+"</td><td>"+e.groupname
 							+"</td><td>"+e.teamname+"</td><td>"+e.code+"</td><td>"+e.brand+"</td><td>"+e.cartype+"</td><td>"+
 							e.displacement+"</td><td>"+e.ischange+"</td><td>"+e.status+"</td><td>"+
 							e.runCount+"</td><td><input id='btn"+i+"' type='button' value='编辑'/>&nbsp;<a href='javascript:showAddGrade(\""+e.id+"\");'>添加成绩</a></td></tr>");
@@ -34,24 +34,25 @@
 </head>
 <body>
 <a href="finduser.jsp"> 查看用户信息 </a>
-	<table align="center" border="1" width="1000">
+	<table align="center" border="1">
 		<tr>
-			<td colspan="12">手机号：<input name="tel" id="tel" />&nbsp;&nbsp;
+			<td colspan="13">手机号：<input name="tel" id="tel" />&nbsp;&nbsp;
 			<input value="搜索" type="button" id="searchBtn" /></td>
 		</tr>
 		<tr>
-			<td>序号</td>
-			<td>所属人</td>
-			<td>组别</td>
-			<td>车队</td>
-			<td>车牌</td>
-			<td>品牌</td>
-			<td>车型</td>
-			<td>排量</td>
-			<td>是否改装</td>
-			<td>状态</td>
-			<td>上场次数</td>
-			<td>操作</td>
+			<td width="40">序号</td>
+			<td width="75">所属人</td>
+			<td width="95">所属人电话</td>
+			<td width="110">组别</td>
+			<td width="200">车队</td>
+			<td width="70">车牌</td>
+			<td width="95">品牌</td>
+			<td width="110">车型</td>
+			<td width="50">排量</td>
+			<td width="65">是否改装</td>
+			<td width="40">状态</td>
+			<td width="65">上场次数</td>
+			<td width="140">操作</td>
 		</tr>
 		<tbody id="showData">
 		</tbody>
