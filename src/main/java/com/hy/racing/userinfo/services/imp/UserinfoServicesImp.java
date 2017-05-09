@@ -72,4 +72,10 @@ public class UserinfoServicesImp extends BaseServices implements IUserInfoServic
 		}
 	}
 
+	@Override
+	public int updateUserinfo(Userinfo user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

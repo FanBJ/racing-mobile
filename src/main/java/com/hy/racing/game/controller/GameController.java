@@ -32,4 +32,6 @@ public class GameController extends ResultBaseController {
 	public Object findGameLogByGroupId(Integer groupId) {
 		return setResultMap(gameServices.findGameLogByGroupId(groupId),false);
 	}
+	
+	
 }

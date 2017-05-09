@@ -38,7 +38,7 @@ public class GameServicesImp extends BaseServices implements IGameServices {
 	@Override
 	public List<GameRankBean> findGameLogByGroupId(Integer groupId) {
 		int team_game_show_rowcount = Integer.valueOf(CacheUtils.getSysParamVal("team_game_show_rowcount"));
-		String sql = "select a.id 'gid',d.username,e.`name` 'teamname',b.brand,min(a.speed) 'speed' from gameinfo a join carinfo b on a.car_id = b.id join cargroup c on c.id = b.cargroup_id join userinfo d on b.user_id = d.id join carteam e on b.team_id = e.id where c.id = ? group by a.car_id order by 'speed' limit ?";
+		String sql = "select a.id 'gid',if(d.sex='1','男','女') 'sex',c.`name` 'groupname',b.displacement,d.username,e.`name` 'teamname',b.brand,b.cartype,min(a.speed) 'speed' from gameinfo a join carinfo b on a.car_id = b.id join cargroup c on c.id = b.cargroup_id join userinfo d on b.user_id = d.id join carteam e on b.team_id = e.id where c.id = ? group by a.car_id order by 'speed' limit ?";
 		return DBUtil.converListMapToListObj(sqlDao.findToMap(sql, new Object[] { groupId, team_game_show_rowcount }),
 				GameRankBean.class);
 	}

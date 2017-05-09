@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>查看用户信息</title>
 <script type="text/javascript" src="${_path }/resources/js/jquery.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {

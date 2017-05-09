@@ -62,7 +62,7 @@ public class CarManagerServices extends BaseServices implements ICarManager {
 	}
 
 	@Override
-	public Carinfo updateCarinfo(Carinfo car) {
+	public int updateCarinfo(Carinfo car) {
 		Carinfo target = hqlDao.get(Carinfo.class, car.getId());
 		target.setBrand(car.getBrand());
 		target.setCargroupId(car.getCargroupId());
@@ -73,7 +73,7 @@ public class CarManagerServices extends BaseServices implements ICarManager {
 		target.setStatus(car.getStatus());
 		target.setTeamId(car.getTeamId());
 		updateObj(target);
-		return target;
+		return 1;
 	}
 
 	@Override

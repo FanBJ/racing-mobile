@@ -10,7 +10,16 @@ public class GameRankBean {
 	private String displacement;//排量
 	private String speed;//最佳速度
 	private String teamname;//车队名称
+	private String groupname;//组别名称
 	
+	
+	
+	public String getGroupname() {
+		return groupname;
+	}
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
+	}
 	public Integer getGid() {
 		return gid;
 	}

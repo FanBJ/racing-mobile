@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>查看车辆信息</title>
 <script type="text/javascript" src="${_path }/resources/js/jquery.js"></script>
 <link rel="stylesheet" href="${_path }/resources/css/divstyle.css">
 <script type="text/javascript">
