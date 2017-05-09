@@ -50,7 +50,7 @@ public class GameServicesImp extends BaseServices implements IGameServices {
 
 	@Override
 	public List<GameRankBean> findCarRank() {
-		String sql = "select a.id 'gid',c.id 'uid',c.username,d.`name` 'groupname',if(c.sex='1','男','女') 'sex',b.id 'cid',b.brand,b.cartype,b.displacement,MIN(speed) 'speed' from gameinfo a join carinfo b on a.car_id = b.id join userinfo c on b.user_id = c.id join cargroup d on d.id = b.cargroup_id group by b.id order by speed";
+		String sql = "select a.id 'gid',c.id 'uid',c.username,d.`name` 'groupname',e.`name` 'teamname',if(c.sex='1','男','女') 'sex',b.id 'cid',b.brand,b.cartype,b.displacement,MIN(speed) 'speed' from gameinfo a join carinfo b on a.car_id = b.id join userinfo c on b.user_id = c.id join cargroup d on d.id = b.cargroup_id join carteam e on b.team_id = e.id group by b.id order by speed";
 		return DBUtil.converListMapToListObj(sqlDao.findToMap(sql), GameRankBean.class);
 	}
 

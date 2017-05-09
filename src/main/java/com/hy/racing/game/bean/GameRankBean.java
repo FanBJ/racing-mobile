@@ -1,5 +1,7 @@
 package com.hy.racing.game.bean;
 
+import com.hy.utils.CarUtils;
+
 public class GameRankBean {
 	private Integer gid;//gameID
 	private Integer uid;//用户DI
@@ -11,9 +13,16 @@ public class GameRankBean {
 	private String speed;//最佳速度
 	private String teamname;//车队名称
 	private String groupname;//组别名称
+	private String sex;
 	
 	
 	
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
 	public String getGroupname() {
 		return groupname;
 	}
@@ -69,7 +78,7 @@ public class GameRankBean {
 		this.cid = cid;
 	}
 	public String getSpeed() {
-		return speed;
+		return CarUtils.getShowTime(speed);
 	}
 	public void setSpeed(String speed) {
 		this.speed = speed;
