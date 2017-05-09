@@ -4,7 +4,7 @@
 <%
 	pageContext.setAttribute("_path", request.getContextPath());
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,7 +21,11 @@
 				$(data.data).each(function(i, e) {
 					$("#showData").append("<tr><td>"+e.id+"</td><td>"+e.username+"</td><td>"+e.groupname
 							+"</td><td>"+e.teamname+"</td><td>"+e.code+"</td><td>"+e.brand+"</td><td>"+e.cartype+"</td><td>"+
-							e.displacement+"</td><td>"+e.ischange+"</td><td>"+e.status+"</td><td><input type='button' value='编辑'/>&nbsp;<a href='javascript:showAddGrade(\""+e.id+"\");'>添加成绩</a></td></tr>");
+							e.displacement+"</td><td>"+e.ischange+"</td><td>"+e.status+"</td><td>"+
+							e.runCount+"</td><td><input id='btn"+i+"' type='button' value='编辑'/>&nbsp;<a href='javascript:showAddGrade(\""+e.id+"\");'>添加成绩</a></td></tr>");
+					$("#btn"+i).on("click",function(){
+						showEditCar(e);
+					});
 				});
 			});
 		});
@@ -32,7 +36,7 @@
 <a href="finduser.jsp"> 查看用户信息 </a>
 	<table align="center" border="1" width="1000">
 		<tr>
-			<td colspan="11">手机号：<input name="tel" id="tel" />&nbsp;&nbsp;
+			<td colspan="12">手机号：<input name="tel" id="tel" />&nbsp;&nbsp;
 			<input value="搜索" type="button" id="searchBtn" /></td>
 		</tr>
 		<tr>
@@ -46,6 +50,7 @@
 			<td>排量</td>
 			<td>是否改装</td>
 			<td>状态</td>
+			<td>上场次数</td>
 			<td>操作</td>
 		</tr>
 		<tbody id="showData">
@@ -67,6 +72,66 @@
 	        <a href="#0" class="cd-popup-close">close</a>
 	    </div>
 	</div>
+	
+	<div class="cd-popup1">
+	    <div class="cd-popup-container1">
+	        <p>编辑序号（<span id="carid"></span>）的数据</p>
+	        <div class="cd-buttons">
+	        	<form id="editCarForm" action="#" method="post">
+	        	<input type="hidden" name="id" id="carId"/>
+	        	<input type="hidden" name="ischange" id="ischange"/>
+	        	<input type="hidden" name="status" id="status"/>
+	        		<table>
+	        			<tr>
+	        				<td>序号：</td>
+	        				<td><span id="editId"></span></td>
+	        			</tr>
+	        			<tr>
+	        				<td>所属人：</td>
+	        				<td><span id="editUsername"></span></td>
+	        			</tr>
+	        			<tr>
+	        				<td>车牌：</td>
+	        				<td><input name="code" id="editCode" required/></td>
+	        			</tr>
+	        			<tr>
+	        				<td>组别：</td>
+	        				<td><select name="cargroupId" id="editGroup" style="width: 170px"></select></td>
+	        			</tr>
+	        			<tr>
+	        				<td>车队：</td>
+	        				<td><select name="teamId" id="editTeam" style="width: 170px"></select></td>
+	        			</tr>
+	        			<tr>
+	        				<td>品牌：</td>
+	        				<td><input name="brand" id="editBrand" required/></td>
+	        			</tr>
+	        			<tr>
+	        				<td>车型：</td>
+	        				<td><input name="cartype" id="editCartype" required/></td>
+	        			</tr>
+	        			<tr>
+	        				<td>排量：</td>
+	        				<td><input name="displacement" id="editDisplacement" required/></td>
+	        			</tr>
+	        			<tr>
+	        				<td>是否改装：</td>
+	        				<td><label><input type="checkbox" id="editIschange"/>是</label></td>
+	        			</tr>
+	        			<tr>
+	        				<td>状态：</td>
+	        				<td><label><input type="checkbox" id="editStatus"/>启用</label></td>
+	        			</tr>
+	        			<tr>
+	        				<td colspan="2" align="center"><input style="height: 30px;width: 60px" id="btnUpdate" value="保存" type="submit"/></td>
+	        			</tr>
+	        		</table>
+	        	</form>
+	        </div>
+	        <a href="#0" class="cd-popup-close">close</a>
+	    </div>
+	</div>
+	
 	<script type="text/javascript">
     /*弹框JS内容*/
     jQuery(document).ready(function($){
@@ -83,10 +148,72 @@
                 $('.cd-popup').removeClass('is-visible');
             }
         });
+        
+        //关闭窗口
+        $('.cd-popup1').on('click', function(event){
+            if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup1') ) {
+                event.preventDefault();
+                $(this).removeClass('is-visible1');
+            }
+        });
+        //ESC关闭
+        $(document).keyup(function(event){
+            if(event.which=='27'){
+                $('.cd-popup1').removeClass('is-visible1');
+            }
+        });
+        
+        $.get("${_path}/phone/group/getAllGroup",function(data){
+        	if(data.data){
+        		$(data.data).each(function(i,e){
+        			$("#editGroup").append("<option value='"+e.id+"'>"+e.name+"</option>");
+        		});
+        	}
+        });
+        
+        $.get("${_path}/phone/carteam/getAllTeam",function(data){
+        	if(data.data){
+        		$(data.data).each(function(i,e){
+        			$("#editTeam").append("<option value='"+e.id+"'>"+e.name+"</option>");
+        		});
+        	}
+        });
+        
+        //提交表单
+        $("#editCarForm").on("submit",function(e){
+        	e.preventDefault();
+        	
+        	$("#ischange").val($("#editIschange").is(":checked")?1:0);
+        	$("#status").val($("#editStatus").is(":checked")?1:0);
+        	
+        	$.post("${_path}/phone/car/updateCar",$("#editCarForm").serialize(),function(data){
+        		if(data.state==1){
+        			alert("更新成功~页面将刷新！");
+        			$("#searchBtn").click();
+        			$(".cd-popup1").removeClass('is-visible1');
+        		}
+        	});
+        });
     });
     function showAddGrade(id){
     	$("#cid").html(id);
         $('.cd-popup').addClass('is-visible');
+    }
+    function showEditCar(obj){
+    	$("#carid").html(obj.id);
+        $('.cd-popup1').addClass('is-visible1');
+        
+        $("#carId").val(obj.id);
+        $("#editId").html(obj.id);
+        $("#editCode").val(obj.code);
+        $("#editUsername").html(obj.username);
+        $("#editGroup").val(obj.cargroupId);
+        $("#editTeam").val(obj.teamId);
+        $("#editBrand").val(obj.brand);
+        $("#editCartype").val(obj.cartype);
+        $("#editDisplacement").val(obj.displacement);
+        $("#editIschange").prop("checked",(obj.ischange=='1'));
+        $("#editStatus").prop("checked",(obj.status=='1'));
     }
     function addGrade(){
     	var carid = $("#cid").html();

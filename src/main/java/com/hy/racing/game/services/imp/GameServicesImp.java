@@ -10,8 +10,10 @@ import com.hy.core.services.BaseServices;
 import com.hy.racing.entity.Gameinfo;
 import com.hy.racing.game.bean.GameRankBean;
 import com.hy.racing.game.services.IGameServices;
+import com.hy.utils.cache.CacheUtils;
 import com.hy.utils.date.DateUtil;
 import com.hy.utils.db.DBUtil;
+
 @Service
 public class GameServicesImp extends BaseServices implements IGameServices {
 
@@ -23,19 +25,22 @@ public class GameServicesImp extends BaseServices implements IGameServices {
 
 	@Override
 	public boolean addGrade(Gameinfo game) {
-		if(null==game || game.getCarId()==null || game.getRoundId()==null || StringUtils.isBlank(game.getSpeed())){
+		if (null == game || game.getCarId() == null || game.getRoundId() == null
+				|| StringUtils.isBlank(game.getSpeed())) {
 			return false;
 		}
-		
+
 		game.setStatus(1);
 		game.setLogtime(DateUtil.nowDate());
 		return addObj(game);
 	}
 
 	@Override
-	public List<Gameinfo> findGameLogByGroupId(Integer groupId) {
-		String sql = "select  a.* from gameinfo a join carinfo b on a.car_id=b.id where b.cargroup_id=?";
-		return null;
+	public List<GameRankBean> findGameLogByGroupId(Integer groupId) {
+		int team_game_show_rowcount = Integer.valueOf(CacheUtils.getSysParamVal("team_game_show_rowcount"));
+		String sql = "select a.id 'gid',d.username,e.`name` 'teamname',b.brand,min(a.speed) 'speed' from gameinfo a join carinfo b on a.car_id = b.id join cargroup c on c.id = b.cargroup_id join userinfo d on b.user_id = d.id join carteam e on b.team_id = e.id where c.id = ? group by a.car_id order by 'speed' limit ?";
+		return DBUtil.converListMapToListObj(sqlDao.findToMap(sql, new Object[] { groupId, team_game_show_rowcount }),
+				GameRankBean.class);
 	}
 
 	@Override

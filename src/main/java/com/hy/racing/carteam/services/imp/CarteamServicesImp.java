@@ -24,8 +24,7 @@ public class CarteamServicesImp extends BaseServices implements ICarteamServices
 
 	@Override
 	public List<Carteam> getAllTeam() {
-		
-		return null;
+		return hqlDao.find("from Carteam");
 	}
 
 }

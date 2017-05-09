@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hy.core.base.ResultBaseController;
 import com.hy.racing.car.services.ICarManager;
-import com.hy.racing.carteam.services.ICarteamServices;
 import com.hy.racing.entity.Carinfo;
-import com.hy.racing.entity.Userinfo;
+import com.hy.utils.json.JsonUtil;
 @Controller
 @RequestMapping("/car")
 public class CarinfoController extends ResultBaseController {
@@ -33,5 +32,11 @@ public class CarinfoController extends ResultBaseController {
 	@ResponseBody
 	public Object findCarByTel(String tel){
 		return setResultMap(carServices.findCarByTel(tel),false);
+	}
+	
+	@RequestMapping("/updateCar")
+	@ResponseBody
+	public Object updateCar(Carinfo car){
+		return setResultMap(carServices.updateCarinfo(car),false);
 	}
 }

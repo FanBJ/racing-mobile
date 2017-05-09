@@ -1,6 +1,7 @@
 package com.hy.racing.game.bean;
 
 public class GameRankBean {
+	private Integer gid;//gameID
 	private Integer uid;//用户DI
 	private String username;//姓名
 	private Integer cid;//车ID
@@ -8,7 +9,20 @@ public class GameRankBean {
 	private String cartype;//车型
 	private String displacement;//排量
 	private String speed;//最佳速度
+	private String teamname;//车队名称
 	
+	public Integer getGid() {
+		return gid;
+	}
+	public void setGid(Integer gid) {
+		this.gid = gid;
+	}
+	public String getTeamname() {
+		return teamname;
+	}
+	public void setTeamname(String teamname) {
+		this.teamname = teamname;
+	}
 	public String getCartype() {
 		return cartype;
 	}

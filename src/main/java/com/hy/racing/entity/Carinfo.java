@@ -38,6 +38,16 @@ public class Carinfo implements java.io.Serializable {
 	private String tel;// 所属人电话
 	private String groupname;// 所属组名称
 	private String teamname;// 所属车队名称
+	private int runCount;//上场次数
+
+	
+	public int getRunCount() {
+		return runCount;
+	}
+
+	public void setRunCount(int runCount) {
+		this.runCount = runCount;
+	}
 
 	public Integer getIschange() {
 		return ischange;

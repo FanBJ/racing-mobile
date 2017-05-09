@@ -27,5 +27,9 @@ public class GameController extends ResultBaseController {
 		return setResultMap(gameServices.findCarRank(),false);
 	}
 	
-	
+	@RequestMapping("/findGameLogByGroupId")
+	@ResponseBody
+	public Object findGameLogByGroupId(Integer groupId) {
+		return setResultMap(gameServices.findGameLogByGroupId(groupId),false);
+	}
 }

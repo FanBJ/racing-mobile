@@ -14,7 +14,7 @@ public interface IGameServices {
 	 * @param groupId
 	 * @return
 	 */
-	List<Gameinfo> findGameLogByGroupId(Integer groupId);
+	List<GameRankBean> findGameLogByGroupId(Integer groupId);
 	/**
 	 * 总排行
 	 * @return

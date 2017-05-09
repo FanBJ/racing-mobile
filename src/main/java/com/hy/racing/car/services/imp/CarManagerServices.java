@@ -62,9 +62,18 @@ public class CarManagerServices extends BaseServices implements ICarManager {
 	}
 
 	@Override
-	public int updateCarinfo(Carinfo car) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Carinfo updateCarinfo(Carinfo car) {
+		Carinfo target = hqlDao.get(Carinfo.class, car.getId());
+		target.setBrand(car.getBrand());
+		target.setCargroupId(car.getCargroupId());
+		target.setCartype(car.getCartype());
+		target.setCode(car.getCode());
+		target.setDisplacement(car.getDisplacement());
+		target.setIschange(car.getIschange());
+		target.setStatus(car.getStatus());
+		target.setTeamId(car.getTeamId());
+		updateObj(target);
+		return target;
 	}
 
 	@Override
@@ -107,12 +116,35 @@ public class CarManagerServices extends BaseServices implements ICarManager {
 
 	@Override
 	public List<Carinfo> findCarByTel(String tel) {
-		String sql = "select a.*,b.username,b.tel,c.`name` groupname,d.`name` teamname from carinfo a join userinfo b on a.user_id = b.id join cargroup c on a.cargroup_id = c.id join carteam d on d.id = a.team_id where 1=1";
+		List<Carinfo> carList = null;
+		String sql = "select a.*,a.cargroup_id 'cargroupId',a.team_id 'teamId',b.username,b.tel,c.`name` groupname,d.`name` teamname from carinfo a join userinfo b on a.user_id = b.id join cargroup c on a.cargroup_id = c.id join carteam d on d.id = a.team_id where 1=1";
 		if (!StringUtils.isBlank(tel)) {
 			sql += " and b.tel =?";
-			return DBUtil.converListMapToListObj(sqlDao.findToMap(sql, tel), Carinfo.class);
+			carList = DBUtil.converListMapToListObj(sqlDao.findToMap(sql, tel), Carinfo.class);
+		}else{
+			carList = DBUtil.converListMapToListObj(sqlDao.findToMap(sql), Carinfo.class);
 		}
-		return DBUtil.converListMapToListObj(sqlDao.findToMap(sql), Carinfo.class);
+		
+		if (null != carList && carList.size() > 0) {
+			StringBuffer sf = new StringBuffer();
+			for (int i = 0; i < carList.size(); i++) {
+				sf.append(i != carList.size() - 1 ? carList.get(i).getId() + "," : carList.get(i).getId());
+			}
+			// 添加上场次数
+			sql = "select a.id,count(b.id) 'runCount' from carinfo a left join gameinfo b on a.id = b.car_id where a.id in ("
+					+ sf.toString() + ") group by a.id";
+			List<Map<String, Object>> map = sqlDao.findToMap(sql);
+			for (Map<String, Object> count : map) {
+				for (Carinfo car : carList) {
+					if (count.get("id").equals(car.getId())) {
+						car.setRunCount(Integer.valueOf(count.get("runCount") + ""));
+						break;
+					}
+				}
+			}
+		}
+
+		return carList;
 	}
 
 }

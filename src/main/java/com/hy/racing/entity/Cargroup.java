@@ -1,5 +1,7 @@
 package com.hy.racing.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 // default package
 // Generated 2017-5-3 17:20:02 by Hibernate Tools 4.3.5.Final
 
@@ -10,7 +12,9 @@ public class Cargroup implements java.io.Serializable {
 
 	private Integer id;
 	private String name;
+	@JsonIgnore
 	private String description;//描述
+	@JsonIgnore
 	private Integer status;
 
 	public Cargroup() {
