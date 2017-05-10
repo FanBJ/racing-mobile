@@ -6,7 +6,7 @@
 	pageContext.setAttribute("_path", request.getContextPath());
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -49,5 +49,52 @@
 		<tbody id="showData">
 		</tbody>
 	</table>
+	
+	<div class="cd-popup1">
+	    <div class="cd-popup-container1">
+	        <p>编辑序号（<span id="carid"></span>）的数据</p>
+	        <div class="cd-buttons">
+	        	<form id="editCarForm" action="#" method="post">
+	        	<input type="hidden" name="id" id="carId"/>
+	        	<input type="hidden" name="ischange" id="ischange"/>
+	        	<input type="hidden" name="status" id="status"/>
+	        		<table>
+	        			<tr>
+	        				<td>序号：</td>
+	        				<td><span id="editId"></span></td>
+	        			</tr>
+	        			<tr>
+	        				<td>姓名：</td>
+	        				<td><span id="editUsername"></span></td>
+	        			</tr>
+	        			<tr>
+	        				<td>性别：</td>
+	        				<td><input name="sex" id="editSexMan" type="radio"/></td>
+	        			</tr>
+	        			<tr>
+	        				<td>电话：</td>
+	        				<td><select name="cargroupId" id="editTel" style="width: 170px" required></select></td>
+	        			</tr>
+	        			<tr>
+	        				<td>驾驶证号：</td>
+	        				<td><select name="teamId" id="editUserId" style="width: 170px" required></select></td>
+	        			</tr>
+	        			<tr>
+	        				<td>归属地：</td>
+	        				<td><input name="brand" id="editArea" required/></td>
+	        			</tr>
+	        			<tr>
+	        				<td>状态：</td>
+	        				<td><label><input type="checkbox" id="editStatus"/>启用</label></td>
+	        			</tr>
+	        			<tr>
+	        				<td colspan="2" align="center"><input style="height: 30px;width: 60px" id="btnUpdate" value="保存" type="submit"/></td>
+	        			</tr>
+	        		</table>
+	        	</form>
+	        </div>
+	        <a href="#0" class="cd-popup-close">close</a>
+	    </div>
+	</div>
 </body>
 </html>
