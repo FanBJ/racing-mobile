@@ -12,11 +12,15 @@ public class ConfigUtil {
 	public final static String API_KEY = "77d7294148df6b454fc3d19b02ad22a2";// API密钥
 	public final static String SIGN_TYPE = "MD5";// 签名加密方式
 	public final static String ROOT_URL = CacheUtils.getSysParamVal("visit_web_root");
+	
+	//骏驰赛车场KEY
+	public final static String APPID_JC = "wx6eddba941e891feb";// 服务号的应用号
+	public final static String APP_SECRECT_JC = "dbd86d96ba963f4c47eef97039dceb33";// 服务号的应用密码
 
 	// 微信支付统一接口的回调action
-	public final static String NOTIFY_URL = ROOT_URL + "/store/order/wxnotify";
+	public final static String NOTIFY_URL = ROOT_URL + "/phone/order/wxnotify";
 	// 微信支付成功支付后跳转的地址
-	public final static String SUCCESS_URL = ROOT_URL + "/store/order/wxsuccess";
+	public final static String SUCCESS_URL = ROOT_URL + "/phone/order/wxsuccess";
 	/**
 	 * 微信基础接口地址
 	 */

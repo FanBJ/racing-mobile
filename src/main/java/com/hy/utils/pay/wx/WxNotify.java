@@ -22,12 +22,21 @@ public class WxNotify {
 	private String total_fee;
 	private String trade_type;
 	private String transaction_id;
+	private String attach;//附加信息
 
 	private String err_code;//
 	private String err_code_des;//
 
 	public boolean isPayOk() {
 		return "SUCCESS".equals(return_code) && "SUCCESS".equals(result_code);
+	}
+
+	public String getAttach() {
+		return attach;
+	}
+
+	public void setAttach(String attach) {
+		this.attach = attach;
 	}
 
 	public String getErr_code() {

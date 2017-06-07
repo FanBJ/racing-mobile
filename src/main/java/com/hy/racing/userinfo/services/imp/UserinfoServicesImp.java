@@ -74,8 +74,27 @@ public class UserinfoServicesImp extends BaseServices implements IUserInfoServic
 
 	@Override
 	public int updateUserinfo(Userinfo user) {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Userinfo getUserByUnionid(String unionid) {
+		if (null == unionid)
+			return null;
+		String hql = "from Userinfo where unionid=?";
+		return hqlDao.findObj(hql, unionid);
+	}
+
+	@Override
+	public Userinfo getUserByOpenidFromWx(String openid) {
+		// 做这个
+		return null;
+	}
+
+	@Override
+	public void updateUserUnionid(Integer id, String unionid) {
+		String sql = "update userinfo set unionid=? where id = ?";
+		sqlDao.insertOrUpdateOrDel(sql, new Object[] { unionid, id });
 	}
 
 }

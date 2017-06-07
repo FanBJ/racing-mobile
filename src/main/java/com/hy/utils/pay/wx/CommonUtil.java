@@ -88,9 +88,15 @@ public class CommonUtil {
 	 * 
 	 * @return
 	 */
-	public static Token getToken(String code) {
+	public static Token getToken(String code,String state) {
+		String url = null;
+		if("3".equals(state)){
+			url = ConfigUtil.GET_TOKEN_BY_CODE.replace("APPID", ConfigUtil.APPID_JC).replace("SECRET", ConfigUtil.APP_SECRECT_JC).replace("CODE", code);
+		}else{
+			url = ConfigUtil.GET_TOKEN_BY_CODE.replace("APPID", ConfigUtil.APPID).replace("SECRET", ConfigUtil.APP_SECRECT).replace("CODE", code);
+		}
+		
 		Token token = null;
-		String url = ConfigUtil.GET_TOKEN_BY_CODE.replace("APPID", ConfigUtil.APPID).replace("SECRET", ConfigUtil.APP_SECRECT).replace("CODE", code);
 		// 发起GET请求获取凭证
 		try {
 			token = JacksonUtils.fromJson(httpsRequest(url, "GET", null), Token.class);

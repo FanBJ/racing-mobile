@@ -22,7 +22,6 @@ public class Carinfo implements java.io.Serializable {
 	private String code;// 车牌
 	private String displacement;// 排量
 	private Integer ischange;// 是否改装
-	@JsonProperty("uid")
 	private Integer uid;
 	private Integer status;
 	private String regtime;// 添加时间

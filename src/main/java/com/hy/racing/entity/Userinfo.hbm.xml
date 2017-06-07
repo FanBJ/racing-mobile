@@ -23,6 +23,9 @@
         <property name="openid" type="string">
             <column name="openid" length="128" />
         </property>
+        <property name="unionid" type="string">
+            <column name="unionid" length="128" />
+        </property>
         <property name="regtime" type="string">
             <column name="regtime" length="20" />
         </property>

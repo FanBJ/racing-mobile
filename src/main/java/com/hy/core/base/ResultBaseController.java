@@ -10,7 +10,7 @@ public class ResultBaseController extends BaseController {
 	private static final String STATE = "state";
 	private static final String MSG = "msg";
 	private static final String DATA = "data";
-	private static final boolean ISENCRYPT = true;// 默认加密
+	private static final boolean ISENCRYPT = false;// 默认加密
 
 	/**
 	 * 返回至终端的信息
