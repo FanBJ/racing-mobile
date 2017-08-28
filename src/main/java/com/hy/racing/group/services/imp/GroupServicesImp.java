@@ -12,7 +12,15 @@ public class GroupServicesImp extends BaseServices implements IGroupServices {
 
 	@Override
 	public List<Cargroup> getAllGroup() {
-		return hqlDao.find("from Cargroup where status=1");
+		List<Cargroup> result =hqlDao.find("from Cargroup where status=1");
+		if(null!=result){
+			Cargroup cg = new Cargroup();
+			cg.setDescription("女子组");
+			cg.setName("女子组");
+			cg.setId(GIRL_GROUP_ID);
+			result.add(0, cg);
+		}
+		return result;
 	}
 
 }

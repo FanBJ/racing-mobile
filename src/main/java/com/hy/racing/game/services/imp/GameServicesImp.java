@@ -10,6 +10,7 @@ import com.hy.core.services.BaseServices;
 import com.hy.racing.entity.Gameinfo;
 import com.hy.racing.game.bean.GameRankBean;
 import com.hy.racing.game.services.IGameServices;
+import com.hy.racing.group.services.IGroupServices;
 import com.hy.utils.cache.CacheUtils;
 import com.hy.utils.date.DateUtil;
 import com.hy.utils.db.DBUtil;
@@ -38,8 +39,19 @@ public class GameServicesImp extends BaseServices implements IGameServices {
 	@Override
 	public List<GameRankBean> findGameLogByGroupId(Integer groupId) {
 		int team_game_show_rowcount = Integer.valueOf(CacheUtils.getSysParamVal("team_game_show_rowcount"));
-		String sql = "select a.id 'gid',d.id 'uid',a.car_id 'cid',if(d.sex='1','男','女') 'sex',c.`name` 'groupname',b.displacement,d.username,e.`name` 'teamname',b.brand,b.cartype,min(a.speed) 'speed' from gameinfo a join carinfo b on a.car_id = b.id join cargroup c on c.id = b.cargroup_id join userinfo d on b.user_id = d.id join carteam e on b.team_id = e.id where c.id = ? group by a.car_id order by a.speed limit ?";
-		return DBUtil.converListMapToListObj(sqlDao.findToMap(sql, new Object[] { groupId, team_game_show_rowcount }),
+		String sql = "select * from (select a.id 'gid',d.id 'uid',a.car_id 'cid',if(d.sex='1','男','女') 'sex',c.`name` 'groupname',b.displacement,d.username,e.`name` 'teamname',b.brand,b.cartype,min(a.speed) 'speed' from gameinfo a join carinfo b on a.car_id = b.id join cargroup c on c.id = b.cargroup_id join userinfo d on b.user_id = d.id join carteam e on b.team_id = e.id where {?} group by a.car_id) a order by a.speed limit ?";
+		String where;
+		int gid = groupId;
+		if (groupId.intValue() == IGroupServices.GIRL_GROUP_ID) {// 如果是女子组
+			where = "d.sex=?";
+			gid = 0;
+		}else if(groupId.intValue() == IGroupServices.MAN_GROUP_ID){// 男子组
+			where = "d.sex=?";
+			gid = 1;
+		}else {
+			where = "c.id=?";
+		}
+		return DBUtil.converListMapToListObj(sqlDao.findToMap(sql.replace("{?}", where), new Object[] { gid, team_game_show_rowcount }),
 				GameRankBean.class);
 	}
 
